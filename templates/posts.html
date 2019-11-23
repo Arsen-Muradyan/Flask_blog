@@ -2,14 +2,29 @@
 {% block content %}
   {% if posts|length > 0 %}
     {% for post in posts %}
-    <div class="card border-0 mt-2" style="width: 100%;">
-        <div class="card-body">
-          <h5 class="card-title">
-            <a href="/posts/{{ post.id }}">{{ post.title }}</a>
-          </h5>
-          <p class="card-text">{{ post.content }}</p>
-        </div>  
-      </div>
+      {% if loop.index % 2 != 0 %}
+      <div class="card border-0 mt-2 d-flex justfy-content-betweenm" style="width: 100%;">
+          <div class="card-body">
+            <img src="/static/images/{{post.image}}"  alt="Post image" style="width:300px;" class="float-left mr-4">
+            <h5 class="card-title mt-3">
+              {{ post.title }}
+            </h5>
+            <p class="card-text">{{ post.content }}</p>
+            <a class="btn btn-outline-primary" href="/posts/{{ post.id }}">Read More...</a>
+          </div>  
+        </div>
+      {% else %}
+        <div class="card border-0 mt-2 d-flex justfy-content-betweenm" style="width: 100%;">
+            <div class="card-body">
+              <img src="/static/images/{{post.image}}"  alt="Post image" style="width:300px;" class="float-right ml-4">
+              <h5 class="card-title mt-3">
+                {{ post.title }}
+              </h5>
+              <p class="card-text">{{ post.content }}</p>
+              <a class="btn btn-outline-primary" href="/posts/{{ post.id }}">Read More...</a>
+            </div>  
+          </div>
+      {% endif %}
     {% endfor %}
   {% else %}
     <h3 class="text-center mt-3">No Posts Found</h3>

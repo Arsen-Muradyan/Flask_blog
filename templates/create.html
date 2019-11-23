@@ -1,11 +1,13 @@
 {% extends 'layouts.html' %}
 {% block content %}
   <br><h3>Add Post</h3>
-  <form action="" method="POST">
+  <form action="" method="POST" enctype="multipart/form-data">
     <input type="text" name="title" class="form-control" placeholder="Title">
     <br>
     <textarea name="content" placeholder="Content" class="form-control"></textarea>
     <br>
-    <input type="submit" class="btn btn-primary">
+    <input type="file" name="image">
+    <br><br>
+    <input type="submit" class="btn btn-primary" value="Add Post">
   </form>
 {% endblock %}
