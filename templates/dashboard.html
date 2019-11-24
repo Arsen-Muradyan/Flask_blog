@@ -1,0 +1,38 @@
+{% extends 'layouts.html' %}
+{% block content %}
+  <br>
+  {% include 'includes/messages.html'%}
+  <br><h2>Dashboard</h2>
+  <a href="/posts/create" class="btn btn-success">Add Post</a>
+  <br><br>
+  <h5 class="text-secondary">Welcome {{ user.username }}</h5>
+  {% if posts|length > 0%}
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Created_at</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+          <tr>
+            <th scope="row">{{ post.id }}</th>
+            <td>{{ post.title }}</td>
+            <td>{{ post.created_at }}</td>
+            <td>
+              <a href="/posts/{{ post.id }}/edit" class="btn btn-success" >Edit</a>
+              <form action="/posts/{{post.id}}/delete" class="float-left mr-3" method="POST">
+                <input type="submit" class="btn btn-danger" value="DELETE" onclick="return confirm('Are You Sure?')">
+              </form>   
+            </td>      
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+   <br><span>No Posts Found</span>
+  {% endif %}
+{% endblock %}

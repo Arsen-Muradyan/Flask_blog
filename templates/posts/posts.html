@@ -5,7 +5,7 @@
       {% if loop.index % 2 != 0 %}
       <div class="card border-0 mt-2 d-flex justfy-content-betweenm" style="width: 100%;">
           <div class="card-body">
-            <img src="/static/images/{{post.image}}"  alt="Post image" style="width:300px;" class="float-left mr-4">
+            <img src="/static/images/{{post.image}}"  alt="Post image"  class="float-left mr-4" style="width:300px; height: 250px;">
             <h5 class="card-title mt-3">
               {{ post.title }}
             </h5>
@@ -16,7 +16,7 @@
       {% else %}
         <div class="card border-0 mt-2 d-flex justfy-content-betweenm" style="width: 100%;">
             <div class="card-body">
-              <img src="/static/images/{{post.image}}"  alt="Post image" style="width:300px;" class="float-right ml-4">
+              <img src="/static/images/{{post.image}}"  alt="Post image" style="width:300px; height: 250px;" class="float-right ml-4">
               <h5 class="card-title mt-3">
                 {{ post.title }}
               </h5>

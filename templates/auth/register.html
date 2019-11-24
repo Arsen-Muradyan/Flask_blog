@@ -1,0 +1,17 @@
+{% extends 'layouts.html' %}
+{% block content %}
+  <br><h3>Register</h3>
+  {% include 'includes/messages.html'%}
+  <form action="" method="POST"s>
+    <label for="username">Username: </label>
+    <input type="text" name="username" class="form-control">
+    <label for="email">Email:</label>
+    <input type="email" name="email" class="form-control">
+    <label for="password">Password:</label>
+    <input type="password" name="password" class="form-control">
+    <label for="confirm">Confirm Password:</label>
+    <input type="password" name="confirm" class="form-control">
+    <br>
+    <input type="submit" class="btn btn-primary" value="Register">
+  </form>
+{% endblock %}
