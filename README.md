@@ -1,4 +1,4 @@
-# Flask SandBox
+# Flask Blog
 
 ## Run app`
 <ol>
