@@ -1,0 +1,12 @@
+version: "1.0"
+services: 
+  database:
+    container_name: my_postgres
+    image: postgres:13.2-alpine
+    env_file: database.conf
+    ports:
+      - 5432:5432
+    volumes: 
+      - db_volume:/var/lib/postgresql
+volumes:
+  db_volume:

@@ -2,45 +2,25 @@ from flask import Flask, render_template, request, redirect
 from flask import url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from werkzeug import secure_filename
+from models import models
+from werkzeug.utils import secure_filename
 from passlib.hash import sha256_crypt
 import re
 import os
 from functools import wraps
+from controllers import index, posts
 app = Flask(__name__)
 db = SQLAlchemy(app)
 # Configure Database Connection
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://root:123456@localhost/myflaskapp'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:123456@localhost:5432/myflaskapp'
 # Configure Image Upload Settings
 app.config['UPLOAD_FOLDER'] = os.getcwd() + '/static/images'
 app.config['MAX_CONTENT_LENGTH'] = 16*1024*1024
 ALLOWED_EXTENISION = ('.png', '.jpg', '.jpeg', '.gif')
 # Import Models
-class Post(db.Model):
-    __tablename__ = 'posts'
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    image = db.Column(db.String(255), nullable=False)
-    user_id = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.DateTime)
-    def __init__(self, title, content, image, user_id):
-      self.title = title
-      self.image = image
-      self.user_id = user_id
-      self.content = content
-      self.created_at = datetime.now()
-class User(db.Model):
-  __tablename__ = 'users'
-  id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(255), nullable=False)
-  email = db.Column(db.String(255), nullable=False, unique=True)
-  password = db.Column(db.String(255), nullable=False)
-  def __init__(self, username, email, password):
-    self.username = username
-    self.email = email
-    self.password = password
+Post, User = models(db)
+
 # Check image Extensions Helper Function
 def allowed_extenision(name):
   return name.endswith(ALLOWED_EXTENISION)
@@ -69,9 +49,7 @@ def login_not_required(f):
   @desc Home Page
   @access public
 """
-@app.route('/')
-def index():
-  return render_template('index.html')
+app.route('/')(index)
 """
   @path /posts
   @name posts
@@ -263,5 +241,9 @@ def dashboard():
   return render_template('dashboard.html', posts=posts, user=user)
 # Run Script
 if __name__ == '__main__':
+  print("===================================")
+  print(datetime.now())
+  print("===================================")
+  db.create_all(app=app)
   app.secret_key = 'secret123'
   app.run(debug=True)
